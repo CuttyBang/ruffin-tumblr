@@ -108,7 +108,6 @@ $(document).ready(function($) {
     $('#tags').val('');
   };
 
-
   $('#go').on('click', function() {
     $('#list').html('');
     if ($('#blog-title').val().trim() === '' && $('#tags').val().trim() === '') {
@@ -142,7 +141,6 @@ $(document).ready(function($) {
       }
     }
   });
-
 
   $('#list').on('click', 'input[type=button]', function(event) {
     event.preventDefault();
