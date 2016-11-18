@@ -1,0 +1,142 @@
+/*===========================>
+IMPORTS
+<============================*/
+
+@import 'bourbon';
+@import 'neat';
+
+/*===========================>
+VARIABLES
+<============================*/
+$tiny: 'min-width: 500px';
+$tablet: 'min-width: 768px';
+$desktop: 'min-width: 1024px';
+$link-color: #1f242d;
+$link-hover: #275898;
+$link-click: #6b94cb;
+$font-color: #1f242d;
+$font1: 'Montserrat', Helvetica, sans-serif;
+$bg: #d6d7d6;
+$bg2: #eee;
+
+
+/*===========================>
+GLOBAL
+<============================*/
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/*===========================>
+MAIN CONTENT
+<============================*/
+
+body {
+  background-color: #eee;
+  background-image: linear-gradient(to bottom, #6b94cb, #e6e7e8 100%);
+  background-attachment: fixed;
+  padding: 20px;
+  font-family: $font1;
+  color: $font-color;
+}
+
+.space {
+  height: 50px;
+}
+
+.container {
+  width: 100%;
+}
+
+/*===========================>
+INPUTS
+<============================*/
+
+.input-section {
+  @include span-columns(6);
+  border: 2px solid #000;
+  padding: 20px;
+  margin-right: 0;
+  font-family: $font1;
+  color: $font-color;
+}
+
+.inputs {
+  @include fill-parent;
+}
+
+#blog-title {
+
+  height: 2em;
+}
+#tags {
+
+  height: 2em;
+}
+
+.go-button {
+  margin-left: 20px;
+  background-color: #75cd86;
+}
+
+
+
+/*===========================>
+RESULTS
+<============================*/
+
+#returns {
+  @include span-columns(6);
+  float: left;
+}
+
+#list{
+  list-style: none;
+  padding-left: 0;
+}
+
+
+
+.items{
+  border: 1px solid #000;
+  padding: 50px;
+  font-size: 0.75em;
+  font-weight: 400;
+  height: auto;
+}
+
+.each-item{;
+  overflow: hidden;
+  height: 400px;
+}
+
+.item-button{
+  float: right;
+  background-color: #4490df;
+  margin-top: 10px;
+}
+
+
+/*===========================>
+FAVORITES
+<============================*/
+
+#favorites {
+  @include span-columns(6);
+  @include shift(8);
+  font-family: $font1;
+  //border: 1px solid #000;
+  float: right;
+  margin-left: 0;
+}
+
+#fave-list{
+  list-style: none;
+  padding-left: 0;
+}
