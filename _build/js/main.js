@@ -99,6 +99,7 @@ $(document).ready(function($) {
     }
   });
 
+
   $(this).on('click', '.item-button', function(event) {
     event.preventDefault();
     $('ul#list li').clone().appendTo('#fave-list');
