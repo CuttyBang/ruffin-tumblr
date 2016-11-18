@@ -1,8 +1,6 @@
 # ruffin-tumblr
 
-Ruffin-Tumblr
-
-A Tumblr API project made for Headspace. I went traditional with this and did a jQuery project. Enter a blog name, or tag, or both and there you go.
+Ruffin-Tumblr is a Tumblr API project made for Headspace. I went traditional with this and did a jQuery project. Enter a blog name, or tag, or both and there you go.
 Add favorites to the favorites column, and remve them if they really aren't your favorite anymore.
 
 A peek at the JS: https://github.com/CuttyBang/ruffin-tumblr/blob/master/_build/js/main.js
