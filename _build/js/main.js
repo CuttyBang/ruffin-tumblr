@@ -16,6 +16,7 @@ $(document).ready(function($) {
       for(var i = 0; i<info.response.posts.length; i++){
         var items = info.response.posts[i];
         if(items !== undefined){
+
           $('#list').append('<li class="items"><div class="each-item"><h3>' + items.title + '</h3>' + items.body + '</div><button class="btn btn-default item-button">Save</button></li>')
         }
       }
@@ -35,9 +36,24 @@ $(document).ready(function($) {
     })
     .done(function(info) {
       for(var i = 0; i<info.response.length; i++){
-        var items = info.response[i].photos[0].original_size.url;
+        var items = info.response.[i];
         if(items !== undefined){
-          $('#list').append('<li class="items"><div class="each-item"><img src="'+ items + '" width="400" height="400"></img></div><button class="btn btn-default item-button">Save</button></li>');
+          if(items.type == 'photo'){
+            $('#list').append('<li class="items"><div class="each-item"><img src="'+ items.photos[0].original_size.url + '" width="400" height="400"></img></div><button class="btn btn-default item-button">Save</button></li>');
+          }
+          else if (items.type == 'quote'){
+            $('#list').append('<li class="items"><h3>' + items.summary + '</h3><div class="each-item"><p><em>"..' + items.text + '.."</em></p></div><button class="btn btn-default item-button">Save</button></li>');
+          }
+          else if (items.type == 'video'){
+            $('#list').append('<li class="items"><h3>' + items.summary + '</h3><div class="each-item"><video src=">' + items.post_url + '" alt"cannot retrieve video"></video></div><button class="btn btn-default item-button">Save</button></li>');
+          }
+          else if (items.type == 'answer'){
+            $('#list').append('<li class="items"><h3>' + items.summary + '</h3><div class="each-item"><div>' + items.text + '</div</div><button class="btn btn-default item-button">Save</button></li>');
+          }else if (items.type == 'link'){
+            $('#list').append('<li class="items"><h3>' + items.summary + '</h3><div class="each-item"><a href="' + items.url + '" target="_blank"></div</div><button class="btn btn-default item-button">Save</button></li>');
+          }else{
+            $('#list').append('<li class="items"><h3>' + items.summary + '</h3><div class="each-item"><iframe width="500" height="400" src="' + items.post_url + '"></div</div><button class="btn btn-default item-button">Save</button></li>');
+          }
         }
       }
     })
