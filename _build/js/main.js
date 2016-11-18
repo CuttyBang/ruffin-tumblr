@@ -16,7 +16,7 @@ $(document).ready(function($) {
       for(var i = 0; i<info.response.posts.length; i++){
         var items = info.response.posts[i];
         if(items !== undefined){
-          $('#list').append('<li class="items"><div class="each-item"><h3>' + items.blog_name + '</h3>' + items.body + '</div><button class="btn btn-default item-button">Save</button></li>')
+          $('#list').append('<li class="items"><div class="each-item"><h3>' + items.blog_name + '</h3>' + items.body + '</div><input type="button" class="btn btn-default item-button" value="Add" /></li>')
         }
       }
     })
@@ -37,7 +37,7 @@ $(document).ready(function($) {
       for(var i = 0; i<info.response.length; i++){
         var items = info.response[i];
         if(items !== undefined){
-          if(items.type == 'quote'){
+          if(items.type == 'photo'){
             $('#list').append('<li class="items"><h3>' + items.summary + '</h3><div class="each-item"><img src="'+ items.photos[0].original_size.url + '" width="400" height="400"></img></div><button class="btn btn-default item-button">Save</button></li>');
           }
           else if (items.type == 'quote'){
@@ -115,10 +115,16 @@ $(document).ready(function($) {
   });
 
 
-  $(this).on('click', '.item-button', function(event) {
+  $('#list').on('click', 'input[type=button]', function(event) {
     event.preventDefault();
-    $('ul#list li').clone().appendTo('#fave-list');
+    $(this).parent().clone().appendTo('#fave-list');
+    $('#fave-list input[type=button]').toggleClass('remove-button').removeClass('item-button').attr('value', 'Remove');
+    $('#fave-list li').toggleClass('fave-items');
   });
 
+  $('#fave-list').on('click', 'input[type=button]', function(event){
+    event.preventDefault();
+    $(this).parent().remove();
+  });
 
 });

@@ -120,3 +120,16 @@ FAVORITES
 #fave-list {
   list-style: none;
   padding-left: 0; }
+
+.remove-button {
+  float: right;
+  background-color: #4490df;
+  margin-top: 10px; }
+
+.fave-items {
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 50px;
+  font-size: 0.75em;
+  font-weight: 400;
+  height: auto; }
