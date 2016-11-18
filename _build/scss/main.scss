@@ -8,11 +8,12 @@ IMPORTS
 /*===========================>
 VARIABLES
 <============================*/
-$tiny: 'min-width: 500px';
-$tablet: 'min-width: 768px';
-$desktop: 'min-width: 1024px';
+$tiny: 'max-width: 500px';
+$tablet: 'max-width: 700px';
+$laptop: 'max-width: 1100px';
+$desktop: 'max-width: 1350px';
 $link-color: #1f242d;
-$link-hover: #275898;
+$link: #275898;
 $link-click: #6b94cb;
 $font-color: #1f242d;
 $font1: 'Montserrat', Helvetica, sans-serif;
@@ -46,6 +47,27 @@ body {
   color: $font-color;
 }
 
+header {
+  text-align: center;
+  color: $link;
+  padding-bottom: 20px;
+  h1 {
+    font-size: 5em;
+  }
+}
+
+footer {
+  text-align: center;
+  line-height: 3rem;
+  bottom: 8px;
+  left: 0;
+  display: block;
+  background-color: transparent;
+  @media($laptop){
+    font-size: .75em;
+  }
+}
+
 .space {
   height: 50px;
 }
@@ -68,20 +90,47 @@ INPUTS
 }
 
 .inputs {
-  @include fill-parent;
 }
 
 #blog-title {
-
   height: 2em;
 }
-#tags {
 
+#blogs-name {
+  @include outer-container;
+  @include span-columns(5);
+  label {
+    font-size: 0.8em;
+  }
+  @media($desktop) {
+    @include outer-container;
+    @include span-columns(10);
+  }
+}
+
+#blog-tag {
+  @include outer-container;
+  @include span-columns(4);
+  @include shift(5);
+  margin-left: 0;
+  label {
+    font-size: 0.8em;
+  }
+  @media($desktop) {
+    @include outer-container;
+    @include span-columns(10);
+  }
+}
+
+#tags {
   height: 2em;
+  width: 60%;
+
 }
 
 .go-button {
-  margin-left: 20px;
+  font-size: 0.8em;
+  //margin-left: 20px;
   background-color: #75cd86;
 }
 
@@ -96,29 +145,47 @@ RESULTS
   float: left;
 }
 
-#list{
+#list {
   list-style: none;
   padding-left: 0;
 }
 
 
-.items{
+.items {
   border: 1px solid #000;
+  border-radius: 10px;
   padding: 50px;
-  font-size: 0.75em;
+  font-size: 1em;
   font-weight: 400;
   height: auto;
+  margin: 10px;
+  @media($laptop){
+    font-size: 0.75em;
+  }
+  h3{
+    @media($laptop){
+      font-size: 1em;
+    }
+  }
 }
 
-.each-item{;
+.each-item {
   overflow: hidden;
   height: 400px;
+  font-size: 1em;
+  @media($laptop){
+    font-size: 0.75em;
+  }
+  @media($tablet){
+    font-size: 0.5em;
+  }
 }
 
-.item-button{
+.item-button {
   float: right;
   background-color: #4490df;
   margin-top: 10px;
+  font-size: 1em;
 }
 
 
@@ -131,27 +198,35 @@ FAVORITES
   @include span-columns(6);
   @include shift(8);
   font-family: $font1;
-  //border: 1px solid #000;
   float: right;
   margin-left: 0;
+  h1 {
+    text-align: center;
+    font-weight: 700;
+    @media($laptop){
+      font-size: 2em;
+    }
+  }
 }
 
-#fave-list{
+#fave-list {
   list-style: none;
   padding-left: 0;
 }
 
-.remove-button{
-  float: right;
-  background-color: #4490df;
-  margin-top: 10px;
-}
 
-.fave-items{
+.fave-items {
   border: 1px solid #000;
   border-radius: 10px;
   padding: 50px;
-  font-size: 0.75em;
+  font-size: 1em;
   font-weight: 400;
   height: auto;
+  margin: 10px;
+  @media($laptop){
+    font-size: 0.75em;
+  }
+  @media($tablet){
+    font-size: 0.5em;
+  }
 }
