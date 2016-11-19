@@ -5,6 +5,7 @@ $(document).ready(function($) {
   var htmlStart = '<li class="items"><h3>';
   var bridge = '</h3><div class="each-item">';
   var htmlEnd = '</div><input type="button" class="btn btn-default item-button" value="Add" /></li>';
+  toastr.options.closeButton = true;
 
   var getBlog = function() {
     var query = $('#blog-title').val();
@@ -23,7 +24,7 @@ $(document).ready(function($) {
       }
     })
     .fail(function() {
-      alert("Sorry, I couldn't find that, please check your search");
+      toastr.error("Wait a second! You need to check your spelling or something. It's me, not you. Promise...")
     });
     $('#blog-title').val('');
   };
@@ -62,7 +63,7 @@ $(document).ready(function($) {
       }
     })
     .fail(function() {
-      alert("Sorry, I couldn't find that, please check your search");
+      toastr.error('I do not think that word means what you think it means.')
     });
     $('#tags').val('');
   };
@@ -102,7 +103,7 @@ $(document).ready(function($) {
       }
     })
     .fail(function() {
-      alert("Sorry, I couldn't find that, please check your search");
+      toastr.error('I think you should look at your entries. Maybe?')
     });
     $('#blog-title').val('');
     $('#tags').val('');
