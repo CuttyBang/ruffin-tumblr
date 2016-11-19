@@ -2,9 +2,9 @@ $(document).ready(function($) {
   var clientKey = 'Vg4h8km8IR34NENUfGKQLHFusV8N3WkawLlQOqW8XVovuqD7JY';
   var namedUrl = 'https://api.tumblr.com/v2/blog/';
   var tagged = 'http://api.tumblr.com/v2/tagged?tag=';
-  var htmlStart = '<li class="items"><h3>';
+  var htmlStart = '<li class="items"><input type="button" class="btn btn-default item-button" value="Add" /><h3>';
   var bridge = '</h3><div class="each-item">';
-  var htmlEnd = '</div><input type="button" class="btn btn-default item-button" value="Add" /></li>';
+  var htmlEnd = '</div></li>';
   toastr.options.closeButton = true;
 
   var getBlog = function() {
