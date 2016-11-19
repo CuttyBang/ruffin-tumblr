@@ -25,9 +25,11 @@ $(document).ready(function($) {
     .done(function(info) {
       for (var i = 0; i<info.response.posts.length; i++) {
         var resp = info.response.posts[i];
-        var htmlChain = util.htmlStart + resp.summary + util.bridge;
-        if (resp !== undefined) {
-          $('#list').append(htmlChain + '<h2>' + resp.title + '</h2>' + resp.body + util.htmlEnd);
+        if (resp.length < 0) {
+          toastr.error('I cannnot find anything worthwhile for that');
+        }
+        else if (resp !== undefined) {
+          $('#list').append(util.htmlStart + resp.blog_name + util.bridge + '<h2>' + resp.title + '</h2>' + resp.body + util.htmlEnd);
         }
       }
     })
@@ -50,7 +52,10 @@ $(document).ready(function($) {
       for (var i = 0; i<info.response.length; i++) {
         var resp = info.response[i];
         var htmlChain = util.htmlStart + resp.summary + util.bridge;
-        if (resp !== undefined) {
+        if (resp.length < 1) {
+          toastr.error('I cannnot find anything worthwhile for that');
+        }
+        else if (resp !== undefined) {
           if (resp.type == 'photo') {
             $('#list').append(htmlChain + '<img src="'+ resp.photos[0].original_size.url + '" width="400" height="400"></img>' + util.htmlEnd);
           }
@@ -65,7 +70,7 @@ $(document).ready(function($) {
           }
           else if (resp.type == 'link'){
             $('#list').append(htmlChain + '<a href="' + resp.url + '" target="_blank">' + util.htmlEnd);
-          }
+          } 
           else{
             $('#list').append(htmlChain + '<iframe width="500" height="400" src="' + resp.post_url + '" alt="cannot retrieve this item, sorry"></iframe>' + util.htmlEnd);
           }
@@ -73,7 +78,7 @@ $(document).ready(function($) {
       }
     })
     .fail(function() {
-      toastr.error('I do not think that word means what you think it means.')
+      toastr.error('I do not think that word means what you think it means.');
     });
     $('#tags').val('');
   };
@@ -115,7 +120,7 @@ $(document).ready(function($) {
       }
     })
     .fail(function() {
-      toastr.error('I think you should look at your entries. Maybe?')
+      toastr.error('I think you should look at your entries. Maybe?');
     });
     $('#blog-title').val('');
     $('#tags').val('');
@@ -125,7 +130,7 @@ $(document).ready(function($) {
   $('#go').on('click', function() {
     $('#list').html('');
     if ($('#blog-title').val().trim() === '' && $('#tags').val().trim() === '') {
-      toastr.error("I need there to be something to search for!")
+      toastr.error("I need there to be something to search for!");
     }
     else if ($('#tags').val().trim() === '') {
       getBlog();
@@ -143,7 +148,7 @@ $(document).ready(function($) {
     if (event.which === 13) {
       $('#list').html('');
       if ($('#blog-title').val().trim() === '' && $('#tags').val().trim() === '') {
-        toaster.error("I need there to be something to search for!")
+        toaster.error("I need there to be something to search for!");
       }
       else if ($('#tags').val().trim() === '') {
         getBlog();
