@@ -1,5 +1,6 @@
 $(document).ready(function($) {
 
+  //utility object of variables
   var util = {
     clientKey: 'Vg4h8km8IR34NENUfGKQLHFusV8N3WkawLlQOqW8XVovuqD7JY',
     namedUrl: 'https://api.tumblr.com/v2/blog/',
@@ -9,8 +10,10 @@ $(document).ready(function($) {
     htmlEnd: '</div></li>',
   };
 
+  //toastr options
   toastr.options.closeButton = true;
 
+  //blog name AJAX function
   var getBlog = function() {
     var query = $('#blog-title').val();
     $.ajax({
@@ -34,6 +37,7 @@ $(document).ready(function($) {
     $('#blog-title').val('');
   };
 
+  //tagged search AJAX function
   var getTags = function() {
     var query = $('#tags').val();
     $.ajax({
@@ -48,22 +52,22 @@ $(document).ready(function($) {
         var htmlChain = util.htmlStart + resp.summary + util.bridge;
         if (resp !== undefined) {
           if (resp.type == 'photo') {
-            $('#list').append(htmlChain + '<img src="'+ resp.photos[0].original_size.url + '" width="400" height="400"></img>' + htmlEnd);
+            $('#list').append(htmlChain + '<img src="'+ resp.photos[0].original_size.url + '" width="400" height="400"></img>' + util.htmlEnd);
           }
           else if (resp.type == 'quote'){
-            $('#list').append(htmlChain + '<p><em>"..' + resp.text + '.."</em></p>' + htmlEnd);
+            $('#list').append(htmlChain + '<p><em>"..' + resp.text + '.."</em></p>' + util.htmlEnd);
           }
           else if (resp.type == 'video'){
-            $('#list').append(htmlChain + '<video src="' + resp.post_url + '" alt="cannot retrieve video"></video>' + htmlEnd);
+            $('#list').append(htmlChain + '<video src="' + resp.post_url + '" alt="cannot retrieve video"></video>' + util.htmlEnd);
           }
           else if (resp.type == 'answer'){
-            $('#list').append(htmlChain + '<div>' + resp.text + '</div>' + htmlEnd);
+            $('#list').append(htmlChain + '<div>' + resp.text + '</div>' + util.htmlEnd);
           }
           else if (resp.type == 'link'){
-            $('#list').append(htmlChain + '<a href="' + resp.url + '" target="_blank">' + htmlEnd);
+            $('#list').append(htmlChain + '<a href="' + resp.url + '" target="_blank">' + util.htmlEnd);
           }
           else{
-            $('#list').append(htmlChain + '<iframe width="500" height="400" src="' + resp.post_url + '" alt="cannot retrieve this item, sorry"></iframe>' + htmlEnd);
+            $('#list').append(htmlChain + '<iframe width="500" height="400" src="' + resp.post_url + '" alt="cannot retrieve this item, sorry"></iframe>' + util.htmlEnd);
           }
         }
       }
@@ -74,6 +78,7 @@ $(document).ready(function($) {
     $('#tags').val('');
   };
 
+  //blog name with tags AJAX function
   var getTaggedBlog = function() {
     var blogName = $('#blog-title').val();
     var tags = $('#tags').val();
@@ -86,6 +91,7 @@ $(document).ready(function($) {
     .done(function(info) {
       for (var i = 0; i<info.response.posts.length; i++) {
         var resp = info.response.posts[i];
+        var htmlChain = util.htmlStart + resp.summary + util.bridge;
         if (resp !== undefined) {
           if (resp.type == 'photo') {
             $('#list').append(htmlChain + '<img src="'+ resp.photos[0].original_size.url + '" width="400" height="400"></img>' + util.htmlEnd);
@@ -115,6 +121,7 @@ $(document).ready(function($) {
     $('#tags').val('');
   };
 
+  //button click handling - fires search
   $('#go').on('click', function() {
     $('#list').html('');
     if ($('#blog-title').val().trim() === '' && $('#tags').val().trim() === '') {
@@ -131,6 +138,7 @@ $(document).ready(function($) {
     }
   });
 
+  //return keystroke handling - fires search
   $(document).keypress(function(event) {
     if (event.which === 13) {
       $('#list').html('');
@@ -149,12 +157,14 @@ $(document).ready(function($) {
     }
   });
 
+  //result favoriting - handles click of "add" button and add it to favorites
   $('#list').on('click', 'input[type=button]', function(event) {
     event.preventDefault();
     $(this).parent().clone().appendTo('#fave-list').removeClass('items').addClass('fave-items');
     $('#fave-list input[type=button]').attr('value', 'Remove');
   });
 
+  //"remove" button - handles click of button and removes item from favorites
   $('#fave-list').on('click', 'input[type=button]', function(event) {
     event.preventDefault();
     $(this).parent().remove();
