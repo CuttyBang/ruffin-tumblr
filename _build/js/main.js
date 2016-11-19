@@ -7,7 +7,6 @@ $(document).ready(function($) {
     htmlStart: '<li class="items"><input type="button" class="btn btn-default item-button" value="Add" /><h3>',
     bridge: '</h3><div class="each-item">',
     htmlEnd: '</div></li>',
-    chain: util.htmlStart + resp.summary + util.bridge,
   };
 
   toastr.options.closeButton = true;
@@ -25,7 +24,7 @@ $(document).ready(function($) {
         var resp = info.response.posts[i];
         var htmlChain = util.htmlStart + resp.summary + util.bridge;
         if (resp !== undefined) {
-          $('#list').append(util.chain + '<h2>' + resp.title + '</h2>' + resp.body + util.htmlEnd);
+          $('#list').append(htmlChain + '<h2>' + resp.title + '</h2>' + resp.body + util.htmlEnd);
         }
       }
     })
@@ -46,24 +45,25 @@ $(document).ready(function($) {
     .done(function(info) {
       for (var i = 0; i<info.response.length; i++) {
         var resp = info.response[i];
+        var htmlChain = util.htmlStart + resp.summary + util.bridge;
         if (resp !== undefined) {
           if (resp.type == 'photo') {
-            $('#list').append(util.chain + '<img src="'+ resp.photos[0].original_size.url + '" width="400" height="400"></img>' + htmlEnd);
+            $('#list').append(htmlChain + '<img src="'+ resp.photos[0].original_size.url + '" width="400" height="400"></img>' + htmlEnd);
           }
           else if (resp.type == 'quote'){
-            $('#list').append(util.chain + '<p><em>"..' + resp.text + '.."</em></p>' + htmlEnd);
+            $('#list').append(htmlChain + '<p><em>"..' + resp.text + '.."</em></p>' + htmlEnd);
           }
           else if (resp.type == 'video'){
-            $('#list').append(util.chain + '<video src="' + resp.post_url + '" alt="cannot retrieve video"></video>' + htmlEnd);
+            $('#list').append(htmlChain + '<video src="' + resp.post_url + '" alt="cannot retrieve video"></video>' + htmlEnd);
           }
           else if (resp.type == 'answer'){
-            $('#list').append(util.chain + '<div>' + resp.text + '</div>' + htmlEnd);
+            $('#list').append(htmlChain + '<div>' + resp.text + '</div>' + htmlEnd);
           }
           else if (resp.type == 'link'){
-            $('#list').append(util.chain + '<a href="' + resp.url + '" target="_blank">' + htmlEnd);
+            $('#list').append(htmlChain + '<a href="' + resp.url + '" target="_blank">' + htmlEnd);
           }
           else{
-            $('#list').append(util.chain + '<iframe width="500" height="400" src="' + resp.post_url + '" alt="cannot retrieve this item, sorry"></iframe>' + htmlEnd);
+            $('#list').append(htmlChain + '<iframe width="500" height="400" src="' + resp.post_url + '" alt="cannot retrieve this item, sorry"></iframe>' + htmlEnd);
           }
         }
       }
@@ -88,22 +88,22 @@ $(document).ready(function($) {
         var resp = info.response.posts[i];
         if (resp !== undefined) {
           if (resp.type == 'photo') {
-            $('#list').append(util.chain + '<img src="'+ resp.photos[0].original_size.url + '" width="400" height="400"></img>' + util.htmlEnd);
+            $('#list').append(htmlChain + '<img src="'+ resp.photos[0].original_size.url + '" width="400" height="400"></img>' + util.htmlEnd);
           }
           else if (resp.type == 'quote'){
-            $('#list').append(util.chain + '<p><em>"..' + resp.text + '.."</em></p>' + util.htmlEnd);
+            $('#list').append(htmlChain + '<p><em>"..' + resp.text + '.."</em></p>' + util.htmlEnd);
           }
           else if (resp.type == 'video'){
-            $('#list').append(util.chain + '<video src="' + resp.post_url + '"></video>' + util.htmlEnd);
+            $('#list').append(htmlChain + '<video src="' + resp.post_url + '"></video>' + util.htmlEnd);
           }
           else if (resp.type == 'answer'){
-            $('#list').append(util.chain + '<div>' + resp.text + '</div>' + util.htmlEnd);
+            $('#list').append(htmlChain + '<div>' + resp.text + '</div>' + util.htmlEnd);
           }
           else if (resp.type == 'link'){
-            $('#list').append(util.chain + '<a href="' + resp.url + '" target="_blank">' + util.htmlEnd);
+            $('#list').append(htmlChain + '<a href="' + resp.url + '" target="_blank">' + util.htmlEnd);
           }
           else{
-            $('#list').append(util.chain + '<iframe width="500" height="400" src="' + resp.post_url + '"></iframe>' + util.htmlEnd);
+            $('#list').append(htmlChain + '<iframe width="500" height="400" src="' + resp.post_url + '"></iframe>' + util.htmlEnd);
           }
         }
       }
