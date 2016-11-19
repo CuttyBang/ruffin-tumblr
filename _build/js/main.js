@@ -1,25 +1,31 @@
 $(document).ready(function($) {
-  var clientKey = 'Vg4h8km8IR34NENUfGKQLHFusV8N3WkawLlQOqW8XVovuqD7JY';
-  var namedUrl = 'https://api.tumblr.com/v2/blog/';
-  var tagged = 'http://api.tumblr.com/v2/tagged?tag=';
-  var htmlStart = '<li class="items"><input type="button" class="btn btn-default item-button" value="Add" /><h3>';
-  var bridge = '</h3><div class="each-item">';
-  var htmlEnd = '</div></li>';
+
+  var util = {
+    clientKey: 'Vg4h8km8IR34NENUfGKQLHFusV8N3WkawLlQOqW8XVovuqD7JY',
+    namedUrl: 'https://api.tumblr.com/v2/blog/',
+    taggedUrl: 'http://api.tumblr.com/v2/tagged?tag=',
+    htmlStart: '<li class="items"><input type="button" class="btn btn-default item-button" value="Add" /><h3>',
+    bridge: '</h3><div class="each-item">',
+    htmlEnd: '</div></li>',
+    chain: util.htmlStart + resp.summary + util.bridge,
+  };
+
   toastr.options.closeButton = true;
 
   var getBlog = function() {
     var query = $('#blog-title').val();
     $.ajax({
-      url: namedUrl + query + '.tumblr.com/posts/text',
+      url: util.namedUrl + query + '.tumblr.com/posts/text',
       type: 'GET',
       dataType: 'jsonp',
-      data: ({api_key: clientKey})
+      data: ({api_key: util.clientKey})
     })
     .done(function(info) {
       for (var i = 0; i<info.response.posts.length; i++) {
-        var items = info.response.posts[i];
-        if (items !== undefined) {
-          $('#list').append(htmlStart + items.blog_name + bridge + '<h2>' + items.title + '</h2>' + items.body + htmlEnd);
+        var resp = info.response.posts[i];
+        var htmlChain = util.htmlStart + resp.summary + util.bridge;
+        if (resp !== undefined) {
+          $('#list').append(util.chain + '<h2>' + resp.title + '</h2>' + resp.body + util.htmlEnd);
         }
       }
     })
@@ -32,32 +38,32 @@ $(document).ready(function($) {
   var getTags = function() {
     var query = $('#tags').val();
     $.ajax({
-      url: tagged + query,
+      url: util.taggedUrl + query,
       type: 'GET',
       dataType: 'jsonp',
-      data: ({api_key: clientKey})
+      data: ({api_key: util.clientKey})
     })
     .done(function(info) {
       for (var i = 0; i<info.response.length; i++) {
-        var items = info.response[i];
-        if (items !== undefined) {
-          if (items.type == 'photo') {
-            $('#list').append(htmlStart + items.summary + bridge + '<img src="'+ items.photos[0].original_size.url + '" width="400" height="400"></img>' + htmlEnd);
+        var resp = info.response[i];
+        if (resp !== undefined) {
+          if (resp.type == 'photo') {
+            $('#list').append(util.chain + '<img src="'+ resp.photos[0].original_size.url + '" width="400" height="400"></img>' + htmlEnd);
           }
-          else if (items.type == 'quote'){
-            $('#list').append(htmlStart + items.summary + bridge + '<p><em>"..' + items.text + '.."</em></p>' + htmlEnd);
+          else if (resp.type == 'quote'){
+            $('#list').append(util.chain + '<p><em>"..' + resp.text + '.."</em></p>' + htmlEnd);
           }
-          else if (items.type == 'video'){
-            $('#list').append(htmlStart + items.summary + bridge + '<video src="' + items.post_url + '" alt="cannot retrieve video"></video>' + htmlEnd);
+          else if (resp.type == 'video'){
+            $('#list').append(util.chain + '<video src="' + resp.post_url + '" alt="cannot retrieve video"></video>' + htmlEnd);
           }
-          else if (items.type == 'answer'){
-            $('#list').append(htmlStart + items.summary + bridge + '<div>' + items.text + '</div>' + htmlEnd);
+          else if (resp.type == 'answer'){
+            $('#list').append(util.chain + '<div>' + resp.text + '</div>' + htmlEnd);
           }
-          else if (items.type == 'link'){
-            $('#list').append(htmlStart + items.summary + bridge + '<a href="' + items.url + '" target="_blank">' + htmlEnd);
+          else if (resp.type == 'link'){
+            $('#list').append(util.chain + '<a href="' + resp.url + '" target="_blank">' + htmlEnd);
           }
           else{
-            $('#list').append(htmlStart + items.summary + bridge + '<iframe width="500" height="400" src="' + items.post_url + '" alt="cannot retrieve this item, sorry"></iframe>' + htmlEnd);
+            $('#list').append(util.chain + '<iframe width="500" height="400" src="' + resp.post_url + '" alt="cannot retrieve this item, sorry"></iframe>' + htmlEnd);
           }
         }
       }
@@ -70,34 +76,34 @@ $(document).ready(function($) {
 
   var getTaggedBlog = function() {
     var blogName = $('#blog-title').val();
-    var tagged = $('#tags').val();
+    var tags = $('#tags').val();
     $.ajax({
-      url: namedUrl + blogName + '.tumblr.com/posts/?tag=' + tagged,
+      url: util.namedUrl + blogName + '.tumblr.com/posts/?tag=' + tags,
       type: 'GET',
       dataType: 'jsonp',
-      data: ({api_key: clientKey})
+      data: ({api_key: util.clientKey})
     })
     .done(function(info) {
       for (var i = 0; i<info.response.posts.length; i++) {
-        var items = info.response.posts[i];
-        if (items !== undefined) {
-          if (items.type == 'photo') {
-            $('#list').append(htmlStart + items.summary + bridge + '<img src="'+ items.photos[0].original_size.url + '" width="400" height="400"></img>' + htmlEnd);
+        var resp = info.response.posts[i];
+        if (resp !== undefined) {
+          if (resp.type == 'photo') {
+            $('#list').append(util.chain + '<img src="'+ resp.photos[0].original_size.url + '" width="400" height="400"></img>' + util.htmlEnd);
           }
-          else if (items.type == 'quote'){
-            $('#list').append(htmlStart + items.summary + bridge + '<p><em>"..' + items.text + '.."</em></p>' + htmlEnd);
+          else if (resp.type == 'quote'){
+            $('#list').append(util.chain + '<p><em>"..' + resp.text + '.."</em></p>' + util.htmlEnd);
           }
-          else if (items.type == 'video'){
-            $('#list').append(htmlStart + items.summary + bridge + '<video src="' + items.post_url + '" alt="cannot retrieve video"></video>' + htmlEnd);
+          else if (resp.type == 'video'){
+            $('#list').append(util.chain + '<video src="' + resp.post_url + '"></video>' + util.htmlEnd);
           }
-          else if (items.type == 'answer'){
-            $('#list').append(htmlStart + items.summary + bridge + '<div>' + items.text + '</div>' + htmlEnd);
+          else if (resp.type == 'answer'){
+            $('#list').append(util.chain + '<div>' + resp.text + '</div>' + util.htmlEnd);
           }
-          else if (items.type == 'link'){
-            $('#list').append(htmlStart + items.summary + bridge + '<a href="' + items.url + '" target="_blank">' + htmlEnd);
+          else if (resp.type == 'link'){
+            $('#list').append(util.chain + '<a href="' + resp.url + '" target="_blank">' + util.htmlEnd);
           }
           else{
-            $('#list').append(htmlStart + items.summary + bridge + '<iframe width="500" height="400" src="' + items.post_url + '" alt="cannot retrieve this item, sorry"></iframe>' + htmlEnd);
+            $('#list').append(util.chain + '<iframe width="500" height="400" src="' + resp.post_url + '"></iframe>' + util.htmlEnd);
           }
         }
       }
@@ -112,7 +118,7 @@ $(document).ready(function($) {
   $('#go').on('click', function() {
     $('#list').html('');
     if ($('#blog-title').val().trim() === '' && $('#tags').val().trim() === '') {
-      alert("I need there to be something to search for!")
+      toastr.error("I need there to be something to search for!")
     }
     else if ($('#tags').val().trim() === '') {
       getBlog();
@@ -129,7 +135,7 @@ $(document).ready(function($) {
     if (event.which === 13) {
       $('#list').html('');
       if ($('#blog-title').val().trim() === '' && $('#tags').val().trim() === '') {
-        alert("I need there to be something to search for!")
+        toaster.error("I need there to be something to search for!")
       }
       else if ($('#tags').val().trim() === '') {
         getBlog();
