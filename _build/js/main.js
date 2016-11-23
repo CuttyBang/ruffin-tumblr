@@ -63,7 +63,7 @@ $(document).ready(function($) {
             $('#list').append(htmlChain + '<p><em>"..' + resp.text + '.."</em></p>' + util.htmlEnd);
           }
           else if (resp.type == 'video'){
-            $('#list').append(htmlChain + '<video src="' + resp.post_url + '" alt="cannot retrieve video"></video>' + util.htmlEnd);
+            $('#list').append(htmlChain + '<video src="' + resp.post_url + '"></video>' + util.htmlEnd);
           }
           else if (resp.type == 'answer'){
             $('#list').append(htmlChain + '<div>' + resp.text + '</div>' + util.htmlEnd);
@@ -72,7 +72,7 @@ $(document).ready(function($) {
             $('#list').append(htmlChain + '<a href="' + resp.url + '" target="_blank">' + util.htmlEnd);
           }
           else{
-            $('#list').append(htmlChain + '<iframe width="500" height="400" src="' + resp.post_url + '" alt="cannot retrieve this item, sorry"></iframe>' + util.htmlEnd);
+            $('#list').append(htmlChain + '<iframe width="500" height="400" src="' + resp.post_url + '"></iframe>' + util.htmlEnd);
           }
         }
       }
